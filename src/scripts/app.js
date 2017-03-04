@@ -3,39 +3,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Backbone from 'backbone';
 
-console.log('wired');
-
 const MainComponent = React.createClass({
 
   getInitialState: function(){
     return {  inputValue: '',
-              inputItem: [],
-              isDeleted: false
+              inputItem: []
            }
   },
 
-  _handleChange: function(evt){
-    this.setState({inputValue: evt.target.value})
-  },
+  _handleChange: function(evt){ this.setState({inputValue: evt.target.value}) },
 
   _handleSubmit: function(evt){
+    if(this.state.inputValue.length === 0){
+      alert('Type something to add your item');
+      return;
+    }
     let newArr = this.state.inputItem.concat(this.state.inputValue);
     this.setState({inputItem: newArr, inputValue: ''})
   },
 
-  remove: function(evt){
-    evt.preventDefault();
-    let clicked = evt.currentTarget;
-    clicked.classList.add('clicked');
-    let filtered = this.state.inputItem.filter(function(listEl){
-      if(listEl.className !== 'list-item clicked'){
-        return false;
-      }
-      else {return true;}
+  remove: function(evt, index){
+    let newArr = this.state.inputItem.filter(function(listEl, ind){
+      return index !== ind;
     })
-
-    this.setState({inputItem: filtered})
-
+    this.setState({inputItem: newArr})
   },
 
   render: function(){
@@ -49,7 +40,12 @@ const MainComponent = React.createClass({
                  value={this.state.inputValue} onChange={this._handleChange}/>
           <button onClick={this._handleSubmit} className="btn-main">Add</button>
         </div>
+        <div className="date-input">
+          <input ref="date" className="date" type="date"/>
+          <input className="important" type="checkbox"/><span>Critical?</span>
+        </div>
         <ListContainer toDoItems={this.state.inputItem} removeItem={this.remove}/>
+                        {/* date={this.refs.date.value}/> */}
       </div>
     )
   }
@@ -57,20 +53,19 @@ const MainComponent = React.createClass({
 
 const ListContainer = React.createClass({
 
-  _createToDoList: function(arrOfItems, state){
+  _createToDoList: function(arrOfItems, dueDate){
     let comp = this;
-    let array = arrOfItems.map(function(listEl){
-      return (<li className="list-item">{listEl}
-              <i onClick={comp.props.removeItem} className="fa fa-trash" aria-hidden="true"></i></li>)
+    let array = arrOfItems.map(function(listEl, index){
+      return (<li className="list-item"><input className="check" type="checkbox"/>{listEl} {dueDate}
+              <i onClick={(evt) => comp.props.removeItem(evt, index)} className="fa fa-trash" aria-hidden="true"></i></li>)
     })
     return array;
   },
 
   render: function(){
     return (<ul>
-              {this._createToDoList(this.props.toDoItems)}
-            </ul>
-            )
+              {this._createToDoList(this.props.toDoItems, this.props.date)}
+            </ul>)
   }
 });
 
