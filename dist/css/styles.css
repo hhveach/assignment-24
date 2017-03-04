@@ -2,10 +2,60 @@
   box-sizing: border-box; }
 
 body {
-  background: limegreen; }
+  margin: 0; }
 
-h2 {
-  color: maroon;
-  border-bottom: 4px solid maroon; }
+input {
+  padding: 15px;
+  width: 80%;
+  border: none;
+  border-right: 1px inset black; }
+
+input:focus, button:focus {
+  outline: none; }
+
+button:hover {
+  cursor: pointer; }
+
+#app-container {
+  width: 1000px;
+  margin: 0 auto;
+  border: 2px solid black; }
+
+.main-content {
+  width: 100%;
+  margin: 0 auto; }
+
+.header {
+  background-color: #7BAFD4;
+  width: 100%;
+  text-align: center; }
+
+.header h1 {
+  margin: 0 0 10px 0; }
+
+.input {
+  width: 35%;
+  margin: 0 auto 10px auto;
+  border: 1px inset black; }
+
+.btn-main {
+  width: 20%;
+  padding: 17px 10px 17px 10px;
+  border: none;
+  background-color: inherit; }
+
+.list-item {
+  width: 80%;
+  margin: 15px auto;
+  border-bottom: 1px solid black;
+  list-style: none;
+  font-size: 24px;
+  font-weight: 300; }
+
+.fa-trash {
+  float: right; }
+
+.fa-trash:hover {
+  cursor: pointer; }
 
 /*# sourceMappingURL=styles.css.map*/
